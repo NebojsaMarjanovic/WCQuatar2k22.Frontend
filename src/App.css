@@ -1,38 +1,413 @@
-.App {
+body{
+  background-image: url("img/background5.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding-bottom: 250px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  
+}
+
+th, td {
+  border: 1px solid rgb(143, 103, 103);
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: rgb(239, 173, 50);
+  font-weight: bold;
+}
+
+td {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+tr:nth-child(even){
+  background-color: #f2f2f2;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+tr:nth-child(odd){
+  background-color: #cfcece;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.group-name {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.points {
+  font-weight: bold;
+}
+
+.jumbotron {
+  padding:40vh;
+  background-image:linear-gradient(rgba(182, 122, 111, 0.418), rgba(255,255,255,.5)), url("img/cover4.jpg") ;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: .3rem;  
+}
+
+/* .navigationBar {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: linear-gradient(rgba(235, 148, 223, 0.418), rgba(255,255,255,.5));
+  color: rgb(70, 70, 70);
+  font-family: 'Verdana, sans-serif';
+ 
+}
+
+.stavka{
+  padding: 3vh 20vh;
+  font-style: bold;
+  color:#e6dee1;
+  text-decoration: none;
+  font-size: 3vh;
+} 
+
+.stavka:hover{
+  color:#e21f66;
+} */
+
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index:1; 
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04AA6D;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.stadioni{
+  display: flex;
+  flex-direction: row;
+  margin-top:30px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.stadion{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(210, 179, 179);
+  color: #d10956;
+  border-radius: 15px;
+  margin-top: 30px;
+  margin-left: 3vh;
+  margin-right: 3vh;
+  width: 30%;
+}
+
+.stadionSlika{
+  margin-top: 20px;
+  width: 70%;
+  height: 70%;
+  border-radius: 15px;
+  align-self: center;
+}
+
+.grupaContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 10vh;
+  width: 100%;
+}
+
+.grupa{
+  text-align: center;
+  width: 23%;
+  margin: 2vh;
+}
+
+.grupaTabela{
+  border: 1px solid black;
+  margin-top: -2vh;
+  text-align: center;
+}
+
+.grupaNaziv{
+  text-align: center;
+  width: 300px;
+}
+
+.zastavaDrzave{
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
+.grupnaFazaContainer{
+  width: 100%;
+  margin-top: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+.selectDrzava{
+  margin-bottom: 3vh;
+}
+
+.dodajGrupu{
+  background-image: linear-gradient(rgba(250, 145, 162, 0.418), rgba(255,255,255,.5)),  url("img/background.jpg");
+  display: flex;
+  border-radius: 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin:auto;
+  margin-top: 10vh;
+
+  /* font-style: oblique; */
+  font-weight: 700;
+  text-align: center;
+  font-family:'Courier New', Courier, monospace ;
+}
+
+.selectDrzava{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.grupnaFazaContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
+.dodajGrupuBtn {
+  appearance: none;
+  background-color: #2ea44f;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+
+
+.dodajGrupuBtn:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.dodajGrupuBtn:hover {
+  background-color: #2c974b;
+}
+
+.dodajGrupuBtn:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.dodajGrupuBtn:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.dodajGrupuBtn:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+
+.odustaniBtn{
+  appearance: none;
+  background-color: #a42e2e;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.odustaniBtn:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.odustaniBtn:hover {
+  background-color: #972c2c;
+}
+
+.odustaniBtn:focus {
+  box-shadow: rgba(164, 46, 46, 0.4) 0 0 0 3px;
+  outline: none;
+}
+
+.odustaniBtn:disabled {
+  background-color: #d39494;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.odustaniBtn:active {
+  background-color: #8e2929;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+.btnContainer{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+  margin-bottom: 5vh;
+}
+
+.sesir{
+  margin-bottom: 20px;
+}
+
+.selectZastava{
+  height: 15px;
+  width: 25px;
+  border: 0.5px solid black;
+}
+
+.izborSviStadioni{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 5vh;
+
+}
+
+.izborStadion{
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  text-align: center;
+  border-radius: 15px;
+  background-color: rgb(210, 179, 179);
+  width: 30%;
+  margin: 10px 10px;
+
+}
+
+.izborStadionSlika{
+  width: 40%;
+  margin-top: 2vh;
+  border-radius: 15px;
+  border: 5px solid black;
+}
+
+.izborStadion img:hover{
+  border-color: rgb(48, 48, 179);
+}
+
+.izborDrzava{
+  margin-top: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.zakaziUtakmicuContainer{
+  margin-top: 10vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.izaberiDrzavu{
+  width: 30%;
+}
+
+.stadioniGrupe{
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.utakmicaContainer{
+  margin-top: 20vh;
 }
