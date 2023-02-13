@@ -173,7 +173,7 @@ function GrupnaFazaCard(){
           </thead>
           <tbody>
         {grupa.drzave.map(drzava => (
-                      <tr key={drzava.drzavaId}>
+                      <tr key={drzava.drzavaId} >
                           <td className='group-name' colSpan={2}>
                             {drzava.naziv} <img src={drzava.zastava} 
                           className='zastavaDrzave'/>

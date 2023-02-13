@@ -17,6 +17,8 @@ function ZakaziUtakmicuCard(){
     const [stadionId, setStadionId] = useState(0);
     const [domacin, setDomacin] = useState('');
     const [gost, setGost] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
+    const [showRezultat, setShowRezultat] = useState(false);
 
     const fetchGrupe = async () => {
         try {
@@ -58,6 +60,11 @@ function ZakaziUtakmicuCard(){
     const handleChangeGrupa = (selectedGrupa)=>{
         fetchRaspoloziveDrzave(selectedGrupa.value,startDate);
         setShowDrzave(true);
+        window.scrollTo({
+			top: 1860,
+			left: 0,
+			behavior: 'smooth'
+		});   
     }
 
     const handleChangeDate = (date) => {
@@ -85,6 +92,8 @@ function ZakaziUtakmicuCard(){
 			behavior: 'smooth'
 		});    
     }
+    
+   
 
     const zakaziUtakmicu = async () => {
        await axios.post("https://localhost:7274/Utakmica",
@@ -95,7 +104,6 @@ function ZakaziUtakmicuCard(){
             gostRezultat:null,
             vremeOdrzavanja:format(startDate,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
             stadionId:stadionId,
-            predajaMeca:false
         }).then((response)=>{
           console.log(response);
           window.alert(response.data.message);

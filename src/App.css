@@ -159,9 +159,13 @@ tr:nth-child(odd){
   margin: 2vh;
 }
 
+.grupa table tr:hover{
+  background-color: #a6b3c5
+}
+
 .grupaTabela{
   border: 1px solid black;
-  margin-top: -2vh;
+  /* margin-top: -2vh; */
   text-align: center;
 }
 
@@ -199,6 +203,7 @@ tr:nth-child(odd){
   width: 50%;
   margin:auto;
   margin-top: 10vh;
+  padding-bottom: 5vh;
 
   /* font-style: oblique; */
   font-weight: 700;
@@ -244,6 +249,7 @@ tr:nth-child(odd){
   touch-action: manipulation;
   vertical-align: middle;
   white-space: nowrap;
+  margin-top: 2vh;
 }
 
 
@@ -410,4 +416,54 @@ tr:nth-child(odd){
 
 .utakmicaContainer{
   margin-top: 20vh;
+}
+
+.checkbox-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 0.15em;
+  margin-right: 0.5em;
+  border: 0.15em solid #007a7e;
+  outline: none;
+  cursor: pointer;
+}
+
+input.checked {
+  background-color: #007a7e;
+  position: relative;
+}
+
+input.checked::before {
+  content: "2714";
+  font-size: 1.5em;
+  color: #fff;
+  position: absolute;
+  right: 1px;
+  top: -5px;
+}
+
+.rezultatInput{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rezultatInput input{
+  width: 30%;
+}
+
+.rezultatContainer{
+  margin-top: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

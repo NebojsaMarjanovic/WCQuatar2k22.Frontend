@@ -51,8 +51,8 @@ function GrupnaFazaCard(){
                           <td>{drzava.brojPobeda}</td>
                           <td>{drzava.brojNeresenih}</td>
                           <td>{drzava.brojIzgubljenih}</td>
-                          <td>{drzava.brojPrimljenihGolova}</td>
                           <td>{drzava.brojDatihGolova}</td>
+                          <td>{drzava.brojPrimljenihGolova}</td>
                           <td><b>{drzava.osvojeniPoeni}</b></td>
                        
                       </tr>
