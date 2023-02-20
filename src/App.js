@@ -20,8 +20,9 @@ function App() {
             element={
               <>
                 <div className='jumbotron'>
-                {/* <h1 className="jumbotronNaslov"><b><i>Svetsko prvenstvo u fudbalu 2022.</i></b></h1>
-                <p className="lead">Katar. <br />Rezervišite svoje putovanje sa najboljom ekipom i pouzdanim vodičima.</p> */}
+                <h1 className="jumbotronNaslov"><b><i>Svetsko prvenstvo</i></b></h1>
+                <h3 className='jumbotronPodnaslov'>Katar 2022.</h3>
+                <p className="jumbotronTekst">Upravljajte održavanjem svetskog prvenstva u samo par klikova!</p>
                 </div>
                 <StadionCard/>
                 <GrupeCard/>

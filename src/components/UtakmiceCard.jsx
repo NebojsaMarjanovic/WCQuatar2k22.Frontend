@@ -116,23 +116,35 @@ function UtakmcieCard(){
               <button className='odustaniBtn' onClick={()=>{setShowF(false)}}>Odustani</button>
               </div>
               </div>:null}
-        <table className='grupaTabela'>
+        <table className='utakmiceTabela'>
+        <thead>
+            <tr>
+            <th>Domaćin</th>
+            <th>Rezultat</th>
+            <th>Gost</th>
+            <th>Vreme utakmice</th>
+            <th>Stadion</th>
+            </tr>
+          </thead>
           <tbody>
         {utakmice.map(utakmicaItem => (
                       <tr key={utakmicaItem.utakmicaId}>
-                            <td>
+                            <td className='tdDomacin'>
                                 {utakmicaItem.domacin.naziv}
-                            </td>
-                            <td>
-                                {format(new Date(utakmicaItem.vremeOdrzavanja),"dd.MM.yyyy. HH:mm")}
-                            </td>
-                            <td>
-                                {utakmicaItem.gost.naziv}
                             </td>
                             <td>
                                 {utakmicaItem.domacinRezultat!=null?
                                <div>{utakmicaItem.domacinRezultat} - {utakmicaItem.gostRezultat}</div>
                             : <button className='dodajGrupuBtn' onClick={()=>{setUtakmica(utakmicaItem); submit(new Date(utakmicaItem.vremeOdrzavanja))}}>Unesi rezultat</button>}
+                            </td>
+                            <td className='tdGost'>
+                                {utakmicaItem.gost.naziv}
+                            </td>
+                            <td>
+                                {format(new Date(utakmicaItem.vremeOdrzavanja),"dd.MM.yyyy. HH:mm")}
+                            </td>
+                            <td >
+                                {utakmicaItem.stadion.nazivStadiona}
                             </td>
                       </tr>
         ))}

@@ -28,7 +28,7 @@ function GrupnaFazaCard(){
         <table className='grupnaFazaTabela'>
           <thead  >
             <tr  >
-            <th className='grupaNaziv' colSpan={2}>
+            <th className='grupaNaziv' >
               Grupa {grupa.nazivGrupe}
             </th>
             <th>Odigrani mečevi</th>

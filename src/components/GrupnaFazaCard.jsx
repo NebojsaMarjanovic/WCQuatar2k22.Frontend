@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 
@@ -12,6 +12,12 @@ function GrupnaFazaCard(){
     const [showF, setShowF] = useState(false)
     const [showBtn, setShowBtn] = useState(true);
     const [nazivGrupe, setNazivGrupe] = useState('');
+    const [inEditMode, setInEditMode] = useState({
+      status: false,
+      rowKey: 0
+  });
+  const [staraDrzavaId, setStaraDrzavaId] = useState(null);
+  const [novaDrzavaId, setNovaDrzavaId] = useState(null);
     const [reload, setReload] = useState(false);
     const grupa = {
       nazivGrupe:nazivGrupe,
@@ -78,14 +84,51 @@ function GrupnaFazaCard(){
       setNazivGrupe('');
   }
 
-  // const handleChangeSesir1 = event => setSelectedValueSesir1(event.target.value);
-  // const handleChangeSesir2 = event => setSelectedValueSesir2(event.target.value);
-  // const handleChangeSesir3 = event => setSelectedValueSesir3(event.target.value);
-  // const handleChangeSesir4 = event => setSelectedValueSesir4(event.target.value);
-
-  const handleChangeSesir1 = (selectedOption1)=>{
-    setSelectedValueSesir1(selectedOption1.value);
+  const zakljucajGrupu = async(nazivGrupe, grupaId) =>{
+    console.log(nazivGrupe);
+    console.log(grupaId);
+    await axios.put("https://localhost:7274/Grupa?grupaId="+grupaId)
+    .then(()=>{
+      window.alert(`Uspešno ste zaključali grupu ${nazivGrupe}!`);
+      setReload(!reload);
+    })
   }
+
+  const onEdit = (staraId) => {
+    console.log(staraId)
+    setInEditMode({
+        status: true,
+        rowKey: staraId
+    });
+    setStaraDrzavaId(staraId);
+  }
+
+  const updateDrzava = async (grupaId) => {
+    axios.put(`https://localhost:7274/Drzava/${grupaId}-${staraDrzavaId}-${novaDrzavaId}`)
+    .then((response)=>{
+      window.alert("Uspesno ste ažurirali državu.");
+      setReload(!reload);
+    })
+  }
+
+
+  const onSave = (grupaId) => {
+    updateDrzava(grupaId);
+}
+
+
+const onCancel = () => {
+    setInEditMode({
+        status: false,
+        rowKey: null
+    })
+    setStaraDrzavaId(null);
+    setNovaDrzavaId(null);
+}
+
+
+
+  const handleChangeSesir1 = (selectedOption1)=>setSelectedValueSesir1(selectedOption1.value);
   const handleChangeSesir2 = (selectedOption2)=>setSelectedValueSesir2(selectedOption2.value);
   const handleChangeSesir3 = (selectedOption3)=>setSelectedValueSesir3(selectedOption3.value);
   const handleChangeSesir4 = (selectedOption4)=>setSelectedValueSesir4(selectedOption4.value);
@@ -107,49 +150,19 @@ function GrupnaFazaCard(){
             <div className='sesir'>
               <label>Šešir 1: </label>
               <Select className='selectDrzava' onChange={handleChangeSesir1} placeholder="Izaberite državu" options={drzave.filter((value)=>value.sesir==1).map(drzava=>({label:<div><img src={drzava.zastava} className="selectZastava"/> {drzava.naziv}</div>, value:drzava.drzavaId}))}></Select>
-{/* 
-            <select value={selectedValueSesir1} onChange={handleChangeSesir1} className="selectDrzava">
-                 {drzave.filter((value)=>value.sesir==1).map(drzava => {
-                    return <option key={drzava.drzavaId} value={drzava.naziv} >
-                        {drzava.naziv}
-                    </option>
-                })}
-            </select> */}
             </div>
             <div className='sesir'>
               <label>Šešir 2: </label>
               <Select className='selectDrzava'onChange={handleChangeSesir2} placeholder="Izaberite državu" options={drzave.filter((value)=>value.sesir==2).map(drzava=>({label:<div><img src={drzava.zastava} className="selectZastava"/> {drzava.naziv}</div>, value:drzava.drzavaId}))}></Select>
-            {/* <select value={selectedValueSesir2} onChange={handleChangeSesir2} className="selectDrzava">
-            {drzave.filter((value)=>value.sesir==2).map(drzava => {
-
-                    return <option key={drzava.drzavaId} value={drzava.naziv} >
-                        {drzava.naziv}
-                    </option>
-                })}
-                </select> */}
             </div>
             <div className='sesir'>
               <label>Šešir 3: </label>
-            {/* <select value={selectedValueSesir3} onChange={handleChangeSesir3} className="selectDrzava">
-            {drzave.filter((value)=>value.sesir==3).map(drzava => {
-                   return <option key={drzava.drzavaId} value={drzava.naziv} >
-                   {drzava.naziv}
-               </option>
-                  })}
-            </select> */}
                     <Select className='selectDrzava' onChange={handleChangeSesir3} placeholder="Izaberite državu" options={drzave.filter((value)=>value.sesir==3).map(drzava=>({label:<div><img src={drzava.zastava} className="selectZastava"/> {drzava.naziv}</div>, value:drzava.drzavaId}))}></Select>
 
             </div>
             <div className='sesir'>
               <label>Šešir 4: </label>
                     <Select className='selectDrzava' onChange={handleChangeSesir4} placeholder="Izaberite državu" options={drzave.filter((value)=>value.sesir==4).map(drzava=>({label:<div><img src={drzava.zastava} className="selectZastava" /> {drzava.naziv}</div>, value:drzava.drzavaId}))}></Select>
-              {/* <select value={selectedValueSesir4} onChange={handleChangeSesir4} className="selectDrzava">
-            {drzave.filter((value)=>value.sesir==4).map(drzava => {
-                    return <option key={drzava.drzavaId} value={drzava.naziv} >
-                      {drzava.naziv} 
-                    </option>
-                  })}
-            </select> */}
             </div>
         </form>
         <div className='btnContainer'>
@@ -166,22 +179,66 @@ function GrupnaFazaCard(){
         <table className='grupaTabela'>
           <thead  >
             <tr  >
-            <th className='grupaNaziv' colSpan={2}>
-              Grupa {grupa.nazivGrupe}
+            <th className='grupaNaziv' colSpan={3}>
+              Grupa {grupa.nazivGrupe} 
+        {grupa.jeZakljucana? " - Grupa je zaključana":null}
             </th>
             </tr>
           </thead>
           <tbody>
-        {grupa.drzave.map(drzava => (
+                 {grupa.drzave.map(drzava => (
                       <tr key={drzava.drzavaId} >
                           <td className='group-name' colSpan={2}>
-                            {drzava.naziv} <img src={drzava.zastava} 
-                          className='zastavaDrzave'/>
+                          {inEditMode.status && inEditMode.rowKey === drzava.drzavaId ? (
+                            <div className='selectIzmenjenaDrzavaContainer'>
+                         <Select className='selectIzmenjenaDrzava' onChange={(e)=>setNovaDrzavaId(e.value)} 
+                             placeholder="Izaberite državu" 
+                             options={drzave.filter((value)=>value.sesir==drzava.sesir)
+                                 .map(drzava=>({label:<div><img src={drzava.zastava} 
+                                   className="selectZastava" /> {drzava.naziv}</div>, 
+                                   value:drzava.drzavaId}))}></Select></div>) :
+                                    <div> {drzava.naziv} <img src={drzava.zastava} className='zastavaDrzave'/>
+                                   </div>}
                           </td>
+                          {!grupa.jeZakljucana?
+                          <td>
+                                {
+                                    inEditMode.status && inEditMode.rowKey === drzava.drzavaId  ? (
+                                      <div className='sacuvajOtkaziBtnContainer'>
+                                        <React.Fragment>
+                                            <button
+                                                className="sacuvajIzmeneBtn"
+                                                onClick={() => onSave(drzava.grupaId)}
+                                            >
+                                                Sačuvaj
+                                            </button>
+                                            <button
+                                                className="otkaziIzmeneBtn"
+                                                style={{marginLeft: 8}}
+                                                onClick={() => onCancel()}
+                                            >
+                                                Otkaži
+                                            </button>
+                                        </React.Fragment>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            className='izmeniBtn'
+                                            onClick={() => 
+                                              onEdit(drzava.drzavaId)}
+                                        >
+                                            Izmeni 
+                                        </button>
+                                    )
+                                }
+                            </td>:null}
                       </tr>
-        ))}
+                 ))}
           </tbody>
         </table>
+        {!grupa.jeZakljucana?
+              <button className='zakljucajGrupuBtn' onClick={()=>zakljucajGrupu(grupa.nazivGrupe, grupa.grupaId)}>Zaključaj grupu</button>
+              :<div style={{padding:20}}></div>}
       </div>
       ))}
       </div>

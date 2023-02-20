@@ -17,12 +17,11 @@ function ZakaziUtakmicuCard(){
     const [stadionId, setStadionId] = useState(0);
     const [domacin, setDomacin] = useState('');
     const [gost, setGost] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
-    const [showRezultat, setShowRezultat] = useState(false);
+   
 
     const fetchGrupe = async () => {
         try {
-            const response = await axios.get('https://localhost:7274/Grupa');
+            const response = await axios.get('https://localhost:7274/zakljucaneGrupe');
             console.log(response.data);
             setGrupe(response.data);
         } catch (error) {
@@ -60,11 +59,6 @@ function ZakaziUtakmicuCard(){
     const handleChangeGrupa = (selectedGrupa)=>{
         fetchRaspoloziveDrzave(selectedGrupa.value,startDate);
         setShowDrzave(true);
-        window.scrollTo({
-			top: 1860,
-			left: 0,
-			behavior: 'smooth'
-		});   
     }
 
     const handleChangeDate = (date) => {
@@ -111,6 +105,11 @@ function ZakaziUtakmicuCard(){
             setShowStadioniGrupe(false);
             fetchRaspoloziveDrzave();
             fetchRaspoloziviStadioni();
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
           })
           .catch(function(error){
             window.alert(error.response.data.message);
@@ -124,7 +123,7 @@ function ZakaziUtakmicuCard(){
 
     return(
         <div className='zakaziUtakmicuContainer'>
-            <div>
+            <div className='vremeUtakmiceContainer'>
             <label>Vreme utakmice</label>
                 <DatePicker selected={startDate} onChange={handleChangeDate} className='datePicker'
                 showTimeSelect/>
@@ -139,16 +138,13 @@ function ZakaziUtakmicuCard(){
                        </div>
                     ))}
                     </div>
-                <label>Izaberite grupu</label>
                 <Select className='izaberiDrzavu' onChange={handleChangeGrupa} placeholder="Izaberite grupu" options={grupe.map(grupa=>({label:grupa.nazivGrupe, value:grupa.grupaId}))}></Select>
                </div> 
-               : null}
+               : <div><img src='./img/cover.png'/></div>}
                 {showDrzave? 
                 <div className='izborDrzava'>
-                <label>Prva država</label>
                 <Select onChange={handleChangeDrzavaDomacin} className='selectDrzava' placeholder="Izaberite prvu državu" 
                         options={raspoloziveDrzaveDomacini.map(drzava=>({label:<div><img src={drzava.zastava} className="selectZastava"/> {drzava.naziv}</div>, value:drzava.drzavaId}))}></Select>
-                <label>Druga država</label>
                 <Select onChange={handleChangeDrzavaGost} className='selectDrzava' placeholder="Izaberite drugu državu" 
                         options={raspoloziveDrzaveGosti.map(drzava=>({label:<div><img src={drzava.zastava} className="selectZastava"/> {drzava.naziv}</div>, value:drzava.drzavaId}))}></Select> 
                 <button className='dodajGrupuBtn' onClick={()=>zakaziUtakmicu()}>Zakazi utakmicu!</button>
