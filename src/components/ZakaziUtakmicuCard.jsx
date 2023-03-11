@@ -112,7 +112,8 @@ function ZakaziUtakmicuCard(){
             });
           })
           .catch(function(error){
-            window.alert(error.response.data.message);
+            console.log(error.response.data.message)
+            window.alert("Greška prilikom zakazivanja utakmice!");
           })
          
     }

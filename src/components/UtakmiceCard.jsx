@@ -3,6 +3,8 @@ import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import {format } from 'date-fns'
+import DatePicker from "react-datepicker";
+
 
 
 function UtakmcieCard(){
@@ -16,6 +18,8 @@ function UtakmcieCard(){
     const [rezultatDomacin, setRezultatDomacin] = useState('');
     const [rezultatGost, setRezultatGost] = useState('');
     const [reload, setReload] = useState(false);
+    const [datumUtakmice, setDatumUtakmice] = useState(new Date());
+
 
     const submit = (vremeOdrzavanja) => {
         console.log(vremeOdrzavanja)
@@ -76,9 +80,25 @@ function UtakmcieCard(){
             domacinRezultat:rezultatDomacin,
             gostRezultat:rezultatGost
         }).then(
-            window.alert(`Uspesno ste uneli rezultat za utakmicu ${utakmica.domacin.naziv} - ${utakmica.gost.naziv}!`));
+            window.alert(`Uspesno ste uneli rezultat za utakmicu ${utakmica.domacin.naziv} - ${utakmica.gost.naziv}!`))
+            .catch((error)=>{
+                console.log(error);
+                window.alert("Greška prilikom unosa rezultata");
+            });
           setShowF(false);
           setReload(true);
+    }
+
+    const handleChangeDate = async (date) => {
+        try{
+            console.log(date);
+            const response = await axios.get('https://localhost:7274/Utakmica/'+format(date,"yyyy-MM-dd"));
+            console.log(response.data);
+            setDatumUtakmice(date);
+            setUtakmice(response.data);
+        } catch(error){
+            console.log(error);
+        }
     }
 
     useEffect(()=>{
@@ -87,6 +107,10 @@ function UtakmcieCard(){
 
     return(
         <div className='utakmicaContainer'>
+             <div className='vremeUtakmiceContainer'>
+            <label>Vreme utakmice</label>
+            <DatePicker selected={datumUtakmice} onChange={handleChangeDate} className='datePicker'/>
+           </div>
              {showF ? <div className='dodajGrupu'>
         <form className='forma'>
             <h2>Rezultat utakmice</h2>

@@ -43,8 +43,9 @@ function GrupnaFazaCard(){
   const fetchDrzave = async () => {
     try {
         const response = await axios.get('https://localhost:7274/Drzava');
-        console.log(response.data);
-        setDrzave(response.data.filter((value)=>value.grupaId==null));
+        setDrzave(response.data);
+        // console.log(response.data);
+        // setDrzave(response.data.filter((value)=>value.grupaId==null));
     } catch (error) {
         console.log(error);
     }
@@ -73,7 +74,11 @@ function GrupnaFazaCard(){
     await axios.post("https://localhost:7274/Grupa",grupa)
     .then((response) => {
       console.log(response);
-      window.alert(`Uspesno ste kreirali grupu ${grupa.nazivGrupe}!`)});
+      window.alert(`Uspesno ste kreirali grupu ${grupa.nazivGrupe}!`)})
+      .catch((error)=>{
+        console.log(error);
+        window.alert("Greška prilikom kreiranja grupe!")
+      });
       setReload(!reload);
       setShowF(false);
       setShowBtn(true);
@@ -92,6 +97,24 @@ function GrupnaFazaCard(){
       window.alert(`Uspešno ste zaključali grupu ${nazivGrupe}!`);
       setReload(!reload);
     })
+    .catch((error)=>{
+      console.log(error);
+      window.alert("Greška prilikom zaključavanja grupe!");
+    })
+  }
+
+  const obrisiGrupu = async(nazivGrupe, grupaId) =>{
+    console.log(nazivGrupe);
+    console.log(grupaId);
+    await axios.delete("https://localhost:7274/Grupa?grupaId="+grupaId)
+    .then(()=>{
+      window.alert(`Uspešno ste obrisali grupu ${nazivGrupe}!`);
+      setReload(!reload);
+    })
+    .catch((error)=>{
+      console.log(error);
+      window.alert("Greška prilikom brisanja grupe!")
+    })
   }
 
   const onEdit = (staraId) => {
@@ -106,8 +129,12 @@ function GrupnaFazaCard(){
   const updateDrzava = async (grupaId) => {
     axios.put(`https://localhost:7274/Drzava/${grupaId}-${staraDrzavaId}-${novaDrzavaId}`)
     .then((response)=>{
-      window.alert("Uspesno ste ažurirali državu.");
+      window.alert("Uspesno ste ažurirali grupu.");
       setReload(!reload);
+    })
+    .catch((error)=>{
+      console.log(error);
+      window.alert("Greška prilikom izmene aranžmana!");
     })
   }
 
@@ -237,7 +264,10 @@ const onCancel = () => {
           </tbody>
         </table>
         {!grupa.jeZakljucana?
+        <div className='upravljajGrupomContainer'>
               <button className='zakljucajGrupuBtn' onClick={()=>zakljucajGrupu(grupa.nazivGrupe, grupa.grupaId)}>Zaključaj grupu</button>
+              <button className='obrisiGrupuBtn' onClick={()=>obrisiGrupu(grupa.nazivGrupe, grupa.grupaId)}>Obriši grupu</button>
+              </div>
               :<div style={{padding:20}}></div>}
       </div>
       ))}
